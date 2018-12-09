@@ -55,6 +55,10 @@ namespace Simplex
             for(int i = 0; i < dmass.Length; i++)
             {
                 dmass[i] = double.Parse(variables[i].Text);
+                if (b)
+                {
+                    dmass[i] = -dmass[i];
+                }
             }
             SimplexInputCreator.rows.Add(new MyRow(SimplexInputCreator.variablesСount,dmass,comboBox1.Text));
             if (SimplexInputCreator.formsNeeded--==0)

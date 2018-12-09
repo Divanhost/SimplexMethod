@@ -27,7 +27,10 @@ namespace Simplex
             {
                 table1[i] = new MyRow(table1[i].factors.Length + SimplexInputCreator.rowsCount-1, table1[i].factors, table1[i].sign);
                 if (i == 0) continue;
-                table1[i].factors[SimplexInputCreator.variablesСount + i] = 1;
+                if (table1[i].sign.Equals("<="))
+                    table1[i].factors[SimplexInputCreator.variablesСount + i] = 1;
+                else
+                    table1[i].factors[SimplexInputCreator.variablesСount + i] = -1;
                 basis.Add(SimplexInputCreator.variablesСount + i);
                 
             }
