@@ -22,6 +22,11 @@ namespace Simplex
             foreach(string item in SimplexInputCreator.CreateSolution())
             {
                 listBox1.Items.Add(item);
+                
+            }
+            for (int i = 0; i < SimplexInputCreator.result.Length; i++)
+            {
+                listBox2.Items.Add(string.Format("X[{0}]={1}", i + 1, SimplexInputCreator.result[i]));
             }
         }
     }

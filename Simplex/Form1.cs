@@ -24,7 +24,7 @@ namespace Simplex
             SimplexInputCreator.formsNeeded = SimplexInputCreator.rowsCount;
             SimplexInputCreator.variablesСount = Int32.Parse(numericUpDown2.Value.ToString());
             SimplexInputCreator.AddSpace();
-
+            SimplexInputCreator.minMax = comboBox1.Text;
             RowOne ro = new RowOne();
             ro.text = "F(x):";
             ro.b = true;

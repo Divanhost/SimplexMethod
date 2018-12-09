@@ -64,9 +64,9 @@
             this.panel2.Controls.Add(this.x3);
             this.panel2.Controls.Add(this.l1);
             this.panel2.Controls.Add(this.x4);
-            this.panel2.Location = new System.Drawing.Point(12, 37);
+            this.panel2.Location = new System.Drawing.Point(-6, 37);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(531, 33);
+            this.panel2.Size = new System.Drawing.Size(526, 33);
             this.panel2.TabIndex = 2;
             // 
             // l00
@@ -208,9 +208,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(429, 8);
+            this.button1.Location = new System.Drawing.Point(395, 8);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(114, 23);
+            this.button1.Size = new System.Drawing.Size(125, 23);
             this.button1.TabIndex = 4;
             this.button1.Text = "Следующая форма";
             this.button1.UseVisualStyleBackColor = true;
@@ -220,7 +220,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 82);
+            this.ClientSize = new System.Drawing.Size(537, 82);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);

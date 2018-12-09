@@ -11,7 +11,9 @@ namespace Simplex
         static public int variablesСount;
         static public int rowsCount;
         static public int formsNeeded;
+        static public string minMax;
         static public List<MyRow> rows;
+        static public double[] result;
         static public void AddSpace()
         {
             SimplexInputCreator.rows = new List<MyRow>(SimplexInputCreator.rowsCount);
@@ -31,18 +33,18 @@ namespace Simplex
                 string tmp = "";
                 foreach(double d in row.factors)
                 {
-                    tmp += d +" ";
+                    string stmp = d.ToString();
+                    while (stmp.Length < 5)
+                    {
+                        stmp += " ";
+                    }
+                    tmp += stmp;
                 }
                 s.Add(tmp);
-
             }
-
-            for(int i =0; i < result.Length; i++)
-            {
-                s.Add(string.Format("X[{0}]={1}", i + 1, result[i]));
-            }
-            
+            SimplexInputCreator.result = result;
             return s;
+            
         }
     }
 }

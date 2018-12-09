@@ -86,20 +86,41 @@ namespace Simplex
         private bool IsItEnd()
         {
             bool flag = true;
-           if( table1[0].factors.Count((e) => e < 0) !=0)
+            if (SimplexInputCreator.minMax.Equals("max"))
             {
-                flag = false;
+                if (table1[0].factors.Count((e) => e < 0) != 0)
+                {
+                    flag = false;
+                }
+            }
+            if (SimplexInputCreator.minMax.Equals("min"))
+            {
+                if (table1[0].factors.Count((e) => e > 0) != 0)
+                {
+                    flag = false;
+                }
             }
             return flag;
         }
 
         private int findMainCol()
         {
-            int mainCol = 0;
-            for (int i = 1; i < n; i++)
+            int mainCol = 1;
+            if (SimplexInputCreator.minMax.Equals("max"))
             {
-                if (table1[0].factors[i] < table1[0].factors[mainCol])
-                    mainCol = i;
+                for (int i = 2; i < n; i++)
+                {
+                    if (table1[0].factors[i] < table1[0].factors[mainCol])
+                        mainCol = i;
+                }
+            }
+            if (SimplexInputCreator.minMax.Equals("min"))
+            {
+                for (int i = 2; i < n; i++)
+                {
+                    if (table1[0].factors[i] > table1[0].factors[mainCol])
+                        mainCol = i;
+                }
             }
             return mainCol;
         }
