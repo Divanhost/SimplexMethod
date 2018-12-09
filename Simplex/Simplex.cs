@@ -68,11 +68,11 @@ namespace Simplex
             }
 
             //заносим в result найденные значения X
-            for (int i = 1; i < result.Length+1; i++)
+            for (int i = 0; i < result.Length; i++)
             {
-                int k = basis.IndexOf(i + 1);
+                int k = basis.IndexOf(i+1);
                 if (k != -1)
-                    result[i] = table1[k].factors[0];
+                    result[i] = table1[k+1].factors[0];
                 else
                     result[i] = 0;
             }
