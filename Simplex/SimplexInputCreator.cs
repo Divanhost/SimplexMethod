@@ -8,16 +8,23 @@ namespace Simplex
 {
     static class SimplexInputCreator
     {
+        // Количество Переменных
         static public int variablesСount;
+        // Количество ограничений
         static public int rowsCount;
         static public int formsNeeded;
+        // Стремление к min/max
         static public string minMax;
+        // Строки в задаче
         static public List<MyRow> rows;
+        // решение задачи
         static public double[] result;
+
         static public void AddSpace()
         {
             SimplexInputCreator.rows = new List<MyRow>(SimplexInputCreator.rowsCount);
         }
+
         static public List<string> CreateSolution()
         {
 

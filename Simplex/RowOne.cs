@@ -14,6 +14,7 @@ namespace Simplex
     {
         public string text;
         public bool b = false;
+        // Храним переменные здесь
         public List<TextBox> variables = new List<TextBox>(6);
 
         public RowOne()
@@ -23,6 +24,7 @@ namespace Simplex
 
         private void RowOne_Load(object sender, EventArgs e)
         {
+
             variables.Add(res);
             variables.Add(x1);
             variables.Add(x2);
@@ -37,6 +39,7 @@ namespace Simplex
             if (b)
             {
                 res.ReadOnly = true;
+                comboBox1.Enabled = false;
             }
             for(int i = 0; i < SimplexInputCreator.variablesСount+1; i++)
             {
@@ -60,6 +63,7 @@ namespace Simplex
                     dmass[i] = -dmass[i];
                 }
             }
+            // Добавляем строку в задачу
             SimplexInputCreator.rows.Add(new MyRow(SimplexInputCreator.variablesСount,dmass,comboBox1.Text));
             if (SimplexInputCreator.formsNeeded--==0)
             {

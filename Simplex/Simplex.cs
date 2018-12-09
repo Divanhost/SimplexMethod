@@ -8,55 +8,62 @@ namespace Simplex
 {
     public class Simplex
     {
-        //data - симплекс таблица без базисных переменных
-        List<MyRow> table1;
+        // Таблица для рачсетов
+        List<MyRow> table;
+        // Количество строк и столбцов
         int m, n;
-
-        List<int> basis; //список базисных переменных
+        // Список базисных переменных
+        List<int> basis; 
 
         public Simplex(List<MyRow> data)
         {
+            //Установка количества строк и столбцов
             m = SimplexInputCreator.rowsCount + 1;
             n = SimplexInputCreator.variablesСount+1;
-            table1 = new List<MyRow>(m);
+            table = new List<MyRow>(m);
             basis = new List<int>();
 
-            table1.InsertRange(0,data);
-            
-            for (int i = 0; i < table1.Count; i++)
+            table.InsertRange(0,data);
+            //Заполнение table исходными данными
+            for (int i = 0; i < table.Count; i++)
             {
-                table1[i] = new MyRow(table1[i].factors.Length + SimplexInputCreator.rowsCount-1, table1[i].factors, table1[i].sign);
+                table[i] = new MyRow(table[i].factors.Length + SimplexInputCreator.rowsCount-1, table[i].factors, table[i].sign);
                 if (i == 0) continue;
-                if (table1[i].sign.Equals("<="))
-                    table1[i].factors[SimplexInputCreator.variablesСount + i] = 1;
+                
+                if (table[i].sign.Equals("<="))
+                    table[i].factors[SimplexInputCreator.variablesСount + i] = 1;
                 else
-                    table1[i].factors[SimplexInputCreator.variablesСount + i] = -1;
+                    table[i].factors[SimplexInputCreator.variablesСount + i] = -1;
                 basis.Add(SimplexInputCreator.variablesСount + i);
                 
             }
             
-            n = table1[0].factors.Length;
+            n = table[0].factors.Length;
         }
 
-        //result - в этот массив будут записаны полученные значения X
+        // Вычисление решения
         public List<MyRow> Calculate(double[] result)
         {
-            int mainCol, mainRow; //ведущие столбец и строка
+            // Ведущие столбец и строка
+            int mainCol, mainRow; 
 
             while (!IsItEnd())
             {
                 mainCol = findMainCol();
                 mainRow = findMainRow(mainCol);
                 basis[mainRow-1] = mainCol;
+                // Обнуление новой таблицы
                 List<MyRow> newTable = new List<MyRow>(m);
                 for(int i = 0; i < m; i++)
                 {
                     newTable.Add(new MyRow(n-1, new double[n-1], "<="));
                 }
+                // Вычисление новой ведущей строки
                 for (int j = 0; j < n; j++)
                 {
-                    newTable[mainRow].factors[j] = table1[mainRow].factors[j] / table1[mainRow].factors[mainCol];
+                    newTable[mainRow].factors[j] = table[mainRow].factors[j] / table[mainRow].factors[mainCol];
                 }
+                // Пересчитываем элементы симплекс-таблицы
                 for (int i = 0; i < m; i++)
                 {
                     if (i == mainRow)
@@ -64,10 +71,10 @@ namespace Simplex
 
                     for (int j = 0; j < n; j++)
                     {
-                        newTable[i].factors[j] = table1[i].factors[j] - table1[i].factors[mainCol] * newTable[mainRow].factors[j];
+                        newTable[i].factors[j] = table[i].factors[j] - table[i].factors[mainCol] * newTable[mainRow].factors[j];
                     }
                 }
-                table1 = newTable;
+                table = newTable;
             }
 
             //заносим в result найденные значения X
@@ -75,27 +82,28 @@ namespace Simplex
             {
                 int k = basis.IndexOf(i+1);
                 if (k != -1)
-                    result[i] = table1[k+1].factors[0];
+                    result[i] = table[k+1].factors[0];
                 else
                     result[i] = 0;
             }
 
-            return table1;
+            return table;
         }
 
+        // Условие завершения алгоритма
         private bool IsItEnd()
         {
             bool flag = true;
             if (SimplexInputCreator.minMax.Equals("max"))
             {
-                if (table1[0].factors.Count((e) => e < 0) != 0)
+                if (table[0].factors.Count((e) => e < 0) != 0)
                 {
                     flag = false;
                 }
             }
             if (SimplexInputCreator.minMax.Equals("min"))
             {
-                if (table1[0].factors.Count((e) => e > 0) != 0)
+                if (table[0].factors.Count((e) => e > 0) != 0)
                 {
                     flag = false;
                 }
@@ -103,6 +111,7 @@ namespace Simplex
             return flag;
         }
 
+        // Нахождение ведущего столбца
         private int findMainCol()
         {
             int mainCol = 1;
@@ -110,7 +119,7 @@ namespace Simplex
             {
                 for (int i = 2; i < n; i++)
                 {
-                    if (table1[0].factors[i] < table1[0].factors[mainCol])
+                    if (table[0].factors[i] < table[0].factors[mainCol])
                         mainCol = i;
                 }
             }
@@ -118,25 +127,26 @@ namespace Simplex
             {
                 for (int i = 2; i < n; i++)
                 {
-                    if (table1[0].factors[i] > table1[0].factors[mainCol])
+                    if (table[0].factors[i] > table[0].factors[mainCol])
                         mainCol = i;
                 }
             }
             return mainCol;
         }
 
+        // Нахождение ведущей строки
         private int findMainRow(int mainCol)
         {
             int mainRow = -1;
 
             for (int i = 1; i < m; i++)
-                if(table1[i].factors[mainCol]>0)
+                if(table[i].factors[mainCol]>0)
                 {
                     mainRow = i;
                     break;
                 }
             for (int i = mainRow + 1; i < m; i++)
-                if ((table1[i].factors[mainCol] > 0) && ((table1[i].factors[0] / table1[i].factors[mainCol]) < (table1[mainRow].factors[0] / table1[mainRow].factors[mainCol])))
+                if ((table[i].factors[mainCol] > 0) && ((table[i].factors[0] / table[i].factors[mainCol]) < (table[mainRow].factors[0] / table[mainRow].factors[mainCol])))
                     mainRow = i;
             return mainRow;
         }
