@@ -68,11 +68,12 @@ namespace Simplex
             if (SimplexInputCreator.formsNeeded--==0)
             {
                 FinalForm ff = new FinalForm();
-                ShowNextForm(ff);
+                ShowNextForm(ff,true);
+                return;
             }
             RowOne ro = new RowOne();
             ro.text = "Ограничение:";
-            ShowNextForm(ro);
+            ShowNextForm(ro,true);
         }
     }
 }
